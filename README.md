@@ -12,7 +12,7 @@ npm install
 💻Usage
  
 ```js
-// replace the config in your index.js 
+// add the config in your index.js 
 const config = {
     user: 'xxxx',
     password: 'xxxx',
