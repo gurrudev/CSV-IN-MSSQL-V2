@@ -6,7 +6,6 @@ const express = require('express');
 const mssql = require('mssql');
 const csv = require('csv-parser');
 const fs = require('fs');
-const { promisify } = require('util');
 const multer = require('multer');
 
 
