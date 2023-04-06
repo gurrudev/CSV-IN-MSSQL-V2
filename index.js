@@ -10,7 +10,17 @@ const { promisify } = require('util');
 const multer = require('multer');
 
 
-
+// replace the config in your index.js 
+const config = {
+  user: 'xxxx',
+  password: 'xxxx',
+  server: 'xxxx', // e.g. 'localhost'
+  database: 'xxxx',
+  options: {
+      encrypt: true, // For secure connection
+      trustServerCertificate: true,
+  }
+};
 // Create an Express app
 const app = express();
 
@@ -60,8 +70,12 @@ app.post('/', upload.single('csvFile'), async (req, res) => {
     }
 
     // Generate the SQL queries for creating the table and inserting the data
-    const createTableQuery = `CREATE TABLE ${tableName} ( `+`Id INT IDENTITY(1,1),`+`${columns.map((column) => `${column} VARCHAR(MAX)`).join(', ')})`;
-    const insertDataQuery = `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES`;
+    const createTableQuery = `CREATE TABLE ${tableName} ( 
+      Id INT IDENTITY(1,1),
+      ${columns.map((column) => `[${column}] VARCHAR(MAX)`).join(', ')}
+    )`;
+
+    const insertDataQuery = `INSERT INTO ${tableName} (${columns.map((column) => `[${column}]`).join(', ')}) VALUES `;
     
     // Execute the create table query
     await pool.request().query(createTableQuery);
